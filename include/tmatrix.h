@@ -53,10 +53,8 @@ public:
   }
   /*TDynamicVector(TDynamicVector&& v) noexcept
   {
-      sz = v.sz;
-      pMem = v.pMem;
-      v.pMem = nullptr;
-      v.sz = 0;
+      pMem = nullptr;
+      swap(*this, v);
   }*/
   ~TDynamicVector()
   {
@@ -77,6 +75,8 @@ public:
   }
  /*TDynamicVector& operator=(TDynamicVector&& v) noexcept
   {
+     if (v == *this)
+         return *this;
       swap(*this, v);
       return *this;
   }*/
@@ -173,7 +173,7 @@ public:
       }
       else throw "Error";
   }
-  T operator*(const TDynamicVector& v) noexcept(noexcept(T()))
+  T operator*(const TDynamicVector& v)
   {
       if (sz == v.sz)
       {
